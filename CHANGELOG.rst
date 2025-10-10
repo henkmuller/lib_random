@@ -1,6 +1,11 @@
 lib_random change log
 =====================
 
+1.3.1
+-----
+
+  * FIXED: Compiler warnings with -Wconversion compiler flag.
+
 1.3.0
 -----
 
