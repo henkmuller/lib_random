@@ -5,7 +5,7 @@ lib_random: Random Number Generation
 ####################################
 
 :vendor: XMOS
-:version: 1.3.0
+:version: 1.3.1
 :scope: General Use
 :description: Random number generation
 :category: General Purpose

@@ -1,77 +1,100 @@
-@Library('xmos_jenkins_shared_library@v0.39.0') _
+@Library('xmos_jenkins_shared_library@v0.43.0') _
 
 getApproval()
 
 pipeline {
-  agent {
-    label 'x86_64 && linux'
-  }
-  environment {
-    REPO = 'lib_random'
-    REPO_NAME = 'lib_random'
-  }
+  agent none
+  
   options {
     buildDiscarder(xmosDiscardBuildSettings())
     skipDefaultCheckout()
     timestamps()
   }
+
   parameters {
     string(
       name: 'TOOLS_VERSION',
-      defaultValue: '15.3.0',
+      defaultValue: '15.3.1',
       description: 'The XTC tools version'
     )
     string(
       name: 'XMOSDOC_VERSION',
-      defaultValue: 'v7.1.0',
+      defaultValue: 'v8.0.0',
       description: 'The xmosdoc version'
     )
     string(
       name: 'INFR_APPS_VERSION',
-      defaultValue: 'v2.1.0',
+      defaultValue: 'v3.1.1',
       description: 'The infr_apps version'
     )
   }
 
   stages {
-    stage('Build') {
-      steps {
-        dir("${REPO}") {
-          checkoutScmShallow()
+    stage('🏗️ Build and test') {
+      agent {
+        label 'x86_64 && linux && documentation'
+      }
 
-          withTools(params.TOOLS_VERSION) {
-            dir("examples") {
-              xcoreBuild()
+      stages {
+        stage('Build') {
+          steps {
+
+            println "Stage running on ${env.NODE_NAME}"
+
+            script {
+              def (server, user, repo) = extractFromScmUrl()
+              env.REPO_NAME = repo
+            }
+
+            dir(REPO_NAME) {
+              checkoutScmShallow()
+
+              withTools(params.TOOLS_VERSION) {
+                dir("examples") {
+                  xcoreBuild()
+                }
+              }
+            }
+          }
+        } // Build
+
+        stage('Library checks') {
+          steps {
+            warnError("Repo checks failed") {
+              runRepoChecks("${WORKSPACE}/${REPO_NAME}")
             }
           }
         }
-      }
-    } // Build
 
-    stage('Library checks') {
-      steps {
-        runLibraryChecks("${WORKSPACE}/${REPO}", "${params.INFR_APPS_VERSION}")
-      }
-    }
+        stage('Documentation') {
+          steps {
+            dir(REPO_NAME) {
+              buildDocs()
+            }
+          }
+        }
 
-    stage('Documentation') {
-      steps {
-        dir("${REPO}") {
-          buildDocs()
+        stage("Archive sandbox") {
+          steps {
+            archiveSandbox(REPO_NAME)
+          }
+        }
+
+      } // stages
+      post {
+        cleanup {
+          xcoreCleanSandbox()
         }
       }
-    }
-
-    stage("Archive sandbox"){
-      steps {
-        archiveSandbox(REPO)
+    } // stage 'Build and test'
+    
+    stage('🚀 Release') {
+      when {
+        expression { triggerRelease.isReleasable() }
       }
-    }
-
-  } // stages
-  post {
-     cleanup {
-          xcoreCleanSandbox()
+      steps {
+        triggerRelease()
+      }
     }
   }
 }
