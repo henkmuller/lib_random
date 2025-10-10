@@ -29,5 +29,5 @@ int random_ro_get_bit() {
         last_time = time;
         return ro & 1;
     }
-    return -diff-1;
+    return -(int)diff-1;
 }
