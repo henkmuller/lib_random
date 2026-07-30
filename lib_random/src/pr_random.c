@@ -4,7 +4,7 @@
 #include "random.h"
 #include "random_internal.h"
 
-#define crc32(a,b,c)  asm("crc32 %0, %1, %2" : "+r" (a) : "r" (c), "r" (b))
+#define crc32(a,b,c)  asm("crc32 %0, %1, %2" : "+r" (a) : "r" (b), "r" (c))
 
 static const unsigned random_poly = 0xEDB88320;
 
