@@ -27,7 +27,7 @@ Features
   * Example application demonstrating usage
 
 ************
-Known Issues
+Known issues
 ************
 
   * None
