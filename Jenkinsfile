@@ -122,7 +122,8 @@ pipeline {
                         stage('Analysis SW') {
                             steps {
                                 dir("${REPO_NAME}/submodules/SP800-90B_EntropyAssessment") {
-                                    sh "make"
+                                    sh 'ls'
+                                    sh 'make'
                                 }
                             }
                         }
