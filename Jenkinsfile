@@ -115,7 +115,8 @@ pipeline {
                                 dir(REPO_NAME) {
                                     checkoutScmShallow()
                                     sh 'git submodule update --init --recursive --depth 1'
-                                }
+                                    sh 'ls submodules'
+                                 }
                             }
                         }
                         stage('Analysis SW') {
