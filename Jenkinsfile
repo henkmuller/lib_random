@@ -115,15 +115,13 @@ pipeline {
                                 dir(REPO_NAME) {
                                     checkoutScmShallow()
                                     sh 'git submodule update --init --recursive --depth 1'
-                                    sh 'ls submodules'
                                  }
                             }
                         }
                         stage('Analysis SW') {
                             steps {
                                 dir("${REPO_NAME}/submodules/SP800-90B_EntropyAssessment/cpp") {
-                                    sh 'ls'
-                                    sh 'make'
+                                    sh 'make -k'
                                 }
                             }
                         }
