@@ -46,7 +46,6 @@ pipeline {
                                 }
                                 dir(REPO_NAME) {
                                     checkoutScmShallow()
-                                    sh 'git submodule update --init --recursive --depth 1'
                                 }
                             }
                         }
@@ -115,6 +114,7 @@ pipeline {
                                 }
                                 dir(REPO_NAME) {
                                     checkoutScmShallow()
+                                    sh 'git submodule update --init --recursive --depth 1'
                                 }
                             }
                         }
