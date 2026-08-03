@@ -27,15 +27,15 @@ def test_ro(request):
         print("Running cmd: ", run_cmd)
 #        stdout = subprocess.check_output(run_cmd, shell = True)
 
-    run_cmd = f'LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH  ldd ../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid'
+    run_cmd = f'LD_LIBRARY_PATH=../submodules/SP800-90B_EntropyAssessment/cpp:$LD_LIBRARY_PATH  ldd ../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid'
     test_output = subprocess.run(run_cmd, shell = True)
     print(test_output)
 
-    run_cmd = f'LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH  ../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid'
+    run_cmd = f'LD_LIBRARY_PATH=../submodules/SP800-90B_EntropyAssessment/cpp:$LD_LIBRARY_PATH  ../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid'
     test_output = subprocess.run(run_cmd, shell = True)
     print(test_output)
 
-    run_cmd = f'LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH  ../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid {outfile}'
+    run_cmd = f'LD_LIBRARY_PATH=../submodules/SP800-90B_EntropyAssessment/cpp:$LD_LIBRARY_PATH  ../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid {outfile}'
     test_output = subprocess.check_output(run_cmd, shell = True)
     print(test_output)
 
