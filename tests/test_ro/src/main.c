@@ -12,7 +12,8 @@
 #include <xcore/hwtimer.h>
 #include "random.h"
 
-#define N 1000000/32
+//#define N 1000000/32
+#define N 1024/32
 
 unsigned int data[N];
 
