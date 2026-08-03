@@ -130,11 +130,6 @@ pipeline {
                                     sh 'make -k'
                                     sh 'ldd ./ea_iid'
                                 }
-                            }
-                        }
-
-                        stage('HW tests') {
-                            steps {
                                 dir("${REPO_NAME}/tests") {
                                     withTools(params.TOOLS_VERSION) {
                                         createVenv(reqFile: "requirements.txt")
