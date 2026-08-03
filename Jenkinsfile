@@ -118,11 +118,6 @@ pipeline {
                                  }
                             }
                         }
-                        stage('Dbg SW') {
-                            steps {
-                                sh 'ls -R'
-                            }
-                        }
                         stage('Analysis SW') {
                             agent {
                                 dockerfile {
