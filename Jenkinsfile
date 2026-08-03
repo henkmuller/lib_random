@@ -130,6 +130,11 @@ pipeline {
                                     sh 'make -k CXXFLAGS="-std=c++11 -fopenmp -O2 -ffloat-store -march=native -I/usr/include/jsoncpp -static"'
                                     sh 'ldd ./ea_iid'
                                 }
+                            }
+                        }
+
+                        stage('HW tests') {
+                            steps {
                                 dir("${REPO_NAME}/tests") {
                                     withTools(params.TOOLS_VERSION) {
                                         createVenv(reqFile: "requirements.txt")
