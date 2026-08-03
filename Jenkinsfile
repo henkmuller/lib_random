@@ -118,13 +118,13 @@ pipeline {
                                  }
                             }
                         }
-                        agent {
-                            dockerfile {
-                                filename 'Dockerfile'
-                                reuseNode true
-                            }
-                        }
                         stage('Analysis SW') {
+                            agent {
+                                dockerfile {
+                                    filename 'Dockerfile'
+                                    reuseNode true
+                                }
+                            }
                             steps {
                                 dir("${REPO_NAME}/submodules/SP800-90B_EntropyAssessment/cpp") {
                                     sh 'make -k'
