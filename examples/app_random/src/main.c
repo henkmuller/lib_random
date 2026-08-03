@@ -1,4 +1,4 @@
-// Copyright 2016-2025 XMOS LIMITED.
+// Copyright 2016-2026 XMOS LIMITED.
 // This Software is subject to the terms of the XMOS Public Licence: Version 1.
 #include <stdint.h>
 #include <print.h>
@@ -26,6 +26,7 @@ int main() {
         printuintln(rand_buf[idx]);
     }
 
+    random_ro_init();
     for (int i = 0; i < 10; ++i) {
         int bit;
         do {
@@ -34,6 +35,7 @@ int main() {
         } while(bit < 0);
         printint(bit);
     }
+    random_ro_uninit();
     printstr(" Done\n");
 
     return 0;

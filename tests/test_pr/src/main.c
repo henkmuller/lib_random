@@ -1,5 +1,7 @@
-// Copyright 2025 XMOS LIMITED.
+// Copyright 2025-2026 XMOS LIMITED.
 // This Software is subject to the terms of the XMOS Public Licence: Version 1.
+
+// This is a smoke test - just tests that there is no repeats in the first 100000 numbers.
 
 #include <stdio.h>
 #include <string.h>

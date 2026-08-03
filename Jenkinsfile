@@ -1,6 +1,6 @@
 // This file relates to internal XMOS infrastructure and should be ignored by external users
-
-@Library('xmos_jenkins_shared_library@v0.42.0') _
+ 
+@Library('xmos_jenkins_shared_library@v0.43.0') _
 
 getApproval()
 pipeline {
@@ -114,13 +114,22 @@ pipeline {
                                 }
                                 dir(REPO_NAME) {
                                     checkoutScmShallow()
-                                }
+                                    sh 'git submodule update --init --recursive --depth 1'
+                                 }
                             }
                         }
                         stage('Analysis SW') {
+                            agent {
+                                dockerfile {
+                                    filename "${REPO_NAME}/Dockerfile"
+                                    reuseNode true
+                                }
+                            }
                             steps {
-                                dir("${REPO_NAME}/submodules/SP800-90B_EntropyAssessment") {
-                                    sh "make"
+                                dir("${REPO_NAME}/submodules/SP800-90B_EntropyAssessment/cpp") {
+                                    sh 'ls -l /lib/x86_64-linux-gnu/libdivsu*'
+                                    sh 'make -k CXXFLAGS="-std=c++11 -fopenmp -O2 -ffloat-store -march=native -I/usr/include/jsoncpp -static"'
+                                    sh 'ldd ./ea_iid'
                                 }
                             }
                         }

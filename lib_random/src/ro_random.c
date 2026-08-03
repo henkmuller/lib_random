@@ -1,11 +1,11 @@
-// Copyright 2018-2025 XMOS LIMITED.
+// Copyright 2018-2026 XMOS LIMITED.
 // This Software is subject to the terms of the XMOS Public Licence: Version 1.
 #include <xs1.h>
 #include <xcore/hwtimer.h>
 #include "random.h"
 #include "random_internal.h"
 
-static int last_time = 0;
+static unsigned last_time = 0;
 
 void random_ro_init() {
     last_time = get_reference_time();
@@ -17,10 +17,10 @@ void random_ro_uninit() {
 }
 
 int random_ro_get_bit() {
-    int time, ro;
+    unsigned ro, time;
     
     time = get_reference_time();
-    int diff = time - last_time;
+    unsigned diff = time - last_time;
 
     if (diff > RANDOM_RO_MIN_TIME_FOR_ONE_BIT) {
         random_ro_off();
@@ -29,5 +29,5 @@ int random_ro_get_bit() {
         last_time = time;
         return ro & 1;
     }
-    return -diff-1;
+    return -(int)diff-1;
 }
