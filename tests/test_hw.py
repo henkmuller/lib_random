@@ -25,7 +25,7 @@ def test_ro(request):
     with FileLock("xrun.lock"):
         run_cmd = f'xrun --id 0 --io --args {binary} {outfile}'
         print("Running cmd: ", run_cmd)
-#        stdout = subprocess.check_output(run_cmd, shell = True)
+        stdout = subprocess.check_output(run_cmd, shell = True)
 
     
     with open(outfile, "rb") as fd:
