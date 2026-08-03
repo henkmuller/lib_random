@@ -25,14 +25,19 @@ def test_ro(request):
     with FileLock("xrun.lock"):
         run_cmd = f'xrun --id 0 --io --args {binary} {outfile}'
         print("Running cmd: ", run_cmd)
-        stdout = subprocess.check_output(run_cmd, shell = True)
+#        stdout = subprocess.check_output(run_cmd, shell = True)
 
-    
-    with open(outfile, "rb") as fd:
-        xrun_output = fd.read()
+    run_cmd = f'ldd ../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid'
+    test_output = subprocess.run(run_cmd, shell = True)
+    print(test_output)
+
+    run_cmd = f'../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid'
+    test_output = subprocess.run(run_cmd, shell = True)
+    print(test_output)
 
     run_cmd = f'../submodules/SP800-90B_EntropyAssessment/cpp/ea_iid {outfile}'
     test_output = subprocess.check_output(run_cmd, shell = True)
+    print(test_output)
 
     assert(b'Warning' not in test_output)
     assert(b'Passed chi square tests' in test_output)
