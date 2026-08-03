@@ -119,6 +119,9 @@ pipeline {
                             }
                         }
                         stage('Analysis SW') {
+                            steps {
+                                sh 'ls'
+                            }
                             agent {
                                 dockerfile {
                                     filename 'Dockerfile'
