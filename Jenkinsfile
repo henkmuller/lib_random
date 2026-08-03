@@ -120,13 +120,13 @@ pipeline {
                         }
                         stage('Dbg SW') {
                             steps {
-                                sh 'ls'
+                                sh 'ls -R'
                             }
                         }
                         stage('Analysis SW') {
                             agent {
                                 dockerfile {
-                                    filename 'Dockerfile'
+                                    filename "${REPO_NAME}/Dockerfile"
                                     reuseNode true
                                 }
                             }
