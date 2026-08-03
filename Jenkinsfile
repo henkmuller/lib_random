@@ -5,7 +5,11 @@
 getApproval()
 pipeline {
 
-    agent none
+    agent {
+        dockerfile {
+            filename 'Dockerfile'
+        }
+    }
 
     parameters {
         string(
