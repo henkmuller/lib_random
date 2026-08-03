@@ -127,9 +127,10 @@ pipeline {
                             }
                             steps {
                                 dir("${REPO_NAME}/submodules/SP800-90B_EntropyAssessment/cpp") {
-                                    sh 'ls -l /lib/x86_64-linux-gnu/libdivsu*'
-                                    sh 'make -k CXXFLAGS="-std=c++11 -fopenmp -O2 -ffloat-store -march=native -I/usr/include/jsoncpp -static"'
+                                    sh '(cd /lib/x86_64-linux-gnu; tar cf - libdivsu*) | tar xf -'
+                                    sh 'make -k CXXFLAGS="-std=c++11 -fopenmp -O2 -ffloat-store -march=native -I/usr/include/jsoncpp -L$cwd"'
                                     sh 'ldd ./ea_iid'
+                                    sh 'ls -l'
                                 }
                             }
                         }
