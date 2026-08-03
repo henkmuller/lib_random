@@ -5,11 +5,7 @@
 getApproval()
 pipeline {
 
-    agent {
-        dockerfile {
-            filename  'Dockerfile'
-        }
-    }
+    agent none
 
     parameters {
         string(
@@ -120,6 +116,12 @@ pipeline {
                                     checkoutScmShallow()
                                     sh 'git submodule update --init --recursive --depth 1'
                                  }
+                            }
+                        }
+                        agent {
+                            dockerfile {
+                                filename 'Dockerfile'
+                                reuseNode true
                             }
                         }
                         stage('Analysis SW') {
